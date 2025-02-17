@@ -1,0 +1,472 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Home>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primixa</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="70">
+
+
+    <!-- TOP NAV -->
+    <div class="top-nav" id="home">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    <p> <i class='bx bxs-envelope'></i> debra.holt@example.com</p>
+                    <p> <i class='bx bxs-phone-call'></i> (219) 555-0114</p>
+                </div>
+                <div class="col-auto social-links">
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                    <a href="#"><i class='bx bxl-instagram'></i></a>
+                    <a href="#"><i class='bx bxl-pinterest'></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Prixima<span class="dot">.</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                @if (Model.MenuItems != null && Model.MenuItems.Any())
+                {
+                    <ul class="navbar-nav ms-auto">
+                        @foreach (var menuItem in Model.MenuItems)
+                        {
+                            if (menuItem.NavMenu != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@menuItem.NavMenu.Url" 
+                                       target="@menuItem.NavMenu.Target">
+                                        @menuItem.NavMenu.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                }
+                @if (Model.ContactForm != null)
+                {
+                    <a href="@Model.ContactForm.Url" data-bs-toggle="modal" 
+                       data-bs-target="#exampleModal" class="btn btn-brand ms-lg-3">
+                        @Model.ContactForm.Name
+                    </a>
+                }
+            </div>
+        </div>
+    </nav>
+    <!--carousel-->
+    @if(Model.Banner!=null && Model.Banner.Count()!=0){
+        <div class="owl-carousel owl-theme hero-slider" id="hero-slider">
+            @foreach(var carousels in Model.Banner){
+                if(carousels.BannerImage!=null){
+                    <div class="min-vh-100 bg-cover d-flex align-items-center" style="background: linear-gradient(rgba(9, 32, 50, 0.4),rgba(9, 32, 50, 0.4)),url('@carousels.BannerImage.Url()');">
+                        <div class="container">
+                            <div class="row">
+                                @if (carousels.BannerTitle == "We craft digital experiences"){
+                                    <div class="col-12">
+                                        @if (!String.IsNullOrWhiteSpace(carousels.BannerTitle) && !String.IsNullOrWhiteSpace(carousels.BannerSubTitle) && !String.IsNullOrWhiteSpace(carousels.BannerSubTitleLine2))
+                                        {
+                                            <h6 class="text-uppercase text-white">@carousels.BannerTitle</h6>
+                                            <h1 class="display-2 my-3 text-white text-uppercase">@carousels.BannerSubTitle<br />@carousels.BannerSubTitleLine2</h1>
+                                        }
+                                        @if (carousels.BannerCta1 != null && carousels.BannerCta2 != null)
+                                        {
+                                            <a href="" class="btn btn-brand">@carousels.BannerCta1.Name</a>
+                                            <a href="" class="btn btn-outline-light ms-md-3">@carousels.BannerCta2.Name</a>
+                                        }
+                                    </div>
+                                }
+                                else{
+                                    <div class="col-12 text-center">
+                                        @if (!String.IsNullOrWhiteSpace(carousels.BannerTitle) && !String.IsNullOrWhiteSpace(carousels.BannerSubTitle) && !String.IsNullOrWhiteSpace(carousels.BannerSubTitleLine2))
+                                        {
+                                            <h6 class="text-uppercase text-white">@carousels.BannerTitle</h6>
+                                            <h1 class="display-2 my-3 text-white text-uppercase">@carousels.BannerSubTitle<br />@carousels.BannerSubTitleLine2</h1>
+                                        }
+                                        @if (carousels.BannerCta1 != null && carousels.BannerCta2 != null)
+                                        {
+                                            <a href="" class="btn btn-brand">@carousels.BannerCta1.Name</a>
+                                            <a href="" class="btn btn-outline-light ms-md-3">@carousels.BannerCta2.Name</a>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 py-5">
+                    <div class="row">
+                        @if(Model.AboutContent!=null && Model.AboutContent.Count()!=0){
+                            @foreach (var aboutcontent in Model.AboutContent){
+                                <div class="col-12 mt-4">
+                                    <div class="info-box">
+                                        @if(aboutcontent.AboutIcon!=null){
+                                            <img src="@aboutcontent.AboutIcon.Url()" alt="">
+                                            <div class="ms-4">
+                                                @if(!String.IsNullOrWhiteSpace(aboutcontent.AboutTitle) && !String.IsNullOrWhiteSpace(aboutcontent.AboutSubTitle)){
+                                                    <h5>@aboutcontent.AboutTitle</h5>
+                                                    <p>@aboutcontent.AboutSubTitle</p>
+                                                }                                                
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }                                                                    
+                        }                       
+                    </div>
+                </div>
+                @if (Model.AboutBanner != null){
+                    <div class="col-lg-5">
+                        <img src="@Model.AboutBanner.Url()" alt="">
+                    </div>
+                }                
+            </div>
+        </div>
+    </section>
+
+
+    <!-- MILESTONE -->
+    @if(Model.MilestoneBanner!=null){
+        <section id="milestone" class="bg-cover" style="background: linear-gradient(#ff4d29d9, #ff4d29d9), url(@Model.MilestoneBanner.Url());">
+            <div class="container">
+                <div class="row text-center justify-content-center gy-4">
+                    @if(Model.MilestoneContent!=null && Model.MilestoneContent.Count()!=0){
+                        @foreach (var milecontent in Model.MilestoneContent){
+                            <div class="col-lg-2 col-sm-6">
+                                @if(!String.IsNullOrWhiteSpace(milecontent.MilestoneCount) && !String.IsNullOrWhiteSpace(milecontent.MilestoneField)){
+                                    <h1 class="display-4">
+                                        <span class="counter-value">0</span>
+                                        <small style="display:none">Raw value: @milecontent.MilestoneCount</small>
+                                        <input type="hidden" class="counter-target" 
+                                               value="@(milecontent.MilestoneCount.Replace(",", "").Replace(" ", "").Replace("K", "000"))" />
+                                    </h1>
+                                    <p class="mb-0">@milecontent.MilestoneField</p>
+                                }
+                            </div>
+                        }                                     
+                    }                       
+                </div>
+            </div>
+        </section>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.ServiceTitle) && !String.IsNullOrWhiteSpace(Model.ServiceSubTitle)){
+        <section id="services" class="text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="intro">
+                            <h6>@Model.ServiceTitle</h6>
+                            <h1>@Model.ServiceSubTitle</h1>
+                            @if(!String.IsNullOrWhiteSpace(Model.ServiceMainDescription)){
+                                <p class="mx-auto">@Model.ServiceMainDescription</p>
+                            }                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    @if(Model.ServiceList!=null && Model.ServiceList.Count()!=0){
+                        foreach(var servicecc in Model.ServiceList){
+                            <div class="col-lg-4 col-md-6">
+                                <div class="service">
+                                    @if(servicecc.ServiceIcon!=null){
+                                        <img src="@servicecc.ServiceIcon.Url()" alt="">
+                                    }
+                                    @if(!String.IsNullOrWhiteSpace(servicecc.ServiceName) && !String.IsNullOrWhiteSpace(servicecc.ServiceDescription)){
+                                        <h5>@servicecc.ServiceName</h5>
+                                        <p>@servicecc.ServiceDescription</p>
+                                    }                                
+                                </div>
+                            </div>
+                        }                        
+                    }                    
+                </div>
+            </div>
+        </section>
+    }
+
+
+    @if(!String.IsNullOrWhiteSpace(Model.ProjectTitle) && !String.IsNullOrWhiteSpace(Model.ProjectSubtitle)){
+        <section class="fade-in bg-light" id="portfolio">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="intro">
+                            <h6>@Model.ProjectTitle</h6>
+                            <h1>@Model.ProjectSubtitle</h1>
+                            @if(!String.IsNullOrWhiteSpace(Model.ProjectDescription)){
+                                <p class="mx-auto">@Model.ProjectDescription</p>
+                            }                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="projects-slider" class="owl-theme owl-carousel">
+                @if(Model.ProjectList!=null && Model.ProjectList.Count()!=0){              
+
+                    @foreach(var projectc in Model.ProjectList){
+                        <div class="project">
+                            <div class="overlay"></div>
+                            @if(projectc.ProjectBanner!=null){
+                                <img src="@projectc.ProjectBanner.Url()" alt="">
+                            }                            
+                            @if(!String.IsNullOrWhiteSpace(projectc.ProjectCategory) && !String.IsNullOrWhiteSpace(projectc.ProjectType)){
+                                <div class="content">
+                                    <h2>@projectc.ProjectCategory</h2>
+                                    <h6>@projectc.ProjectType</h6>
+                                </div>
+                            }
+                        </div>
+                    }                        
+                }            
+            </div>
+        </section>
+    }
+
+    @if(!String.IsNullOrWhiteSpace(Model.TeamTitle) && !String.IsNullOrWhiteSpace(Model.TeamSubtitle)){
+        <section id="team" class="fade-in">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="intro">
+                            <h6>@Model.TeamTitle</h6>
+                            <h1>@Model.TeamSubtitle</h1>
+                            @if(!String.IsNullOrWhiteSpace(Model.TeamDescription)){
+                                <p class="mx-auto">@Model.TeamDescription</p>                            
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">                    
+                    @if(Model.TeamMembers!=null && Model.TeamMembers.Count()!=0){
+                        @foreach(var teams in Model.TeamMembers){
+                            <div class="col-lg-4 col-md-8">
+                                <div class="team-member">
+                                    <div class="image">
+                                        @if(teams.TeamProfilePhoto!=null){
+                                            <img src="@teams.TeamProfilePhoto.Url()" alt="">
+                                        }                                        
+                                        <div class="social-icons">
+                                            <a href="#"><i class='bx bxl-facebook'></i></a>
+                                            <a href="#"><i class='bx bxl-twitter'></i></a>
+                                            <a href="#"><i class='bx bxl-instagram'></i></a>
+                                            <a href="#"><i class='bx bxl-pinterest'></i></a>
+                                        </div>
+                                        <div class="overlay"></div>
+                                    </div>
+                                    @if(!String.IsNullOrWhiteSpace(teams.TeamMemberName) && !String.IsNullOrWhiteSpace(teams.TeamMemberRole)){
+                                        <h5>@teams.TeamMemberName</h5>
+                                        <p>@teams.TeamMemberRole</p>
+                                    }
+                                </div>
+                            </div>                            
+                        }                          
+                    }
+                </div>                                     
+            </div>
+        </section>
+    }
+
+    @if(Model.ReviewBackground!=null){
+        <section class="fade-in bg-light" id="reviews" style="background: linear-gradient(-90deg, rgba(8, 32, 50, 0.8), rgba(8, 32, 50, 0.8)), url(@Model.ReviewBackground.Url()), #082032;">
+            <div class="owl-theme owl-carousel reviews-slider container">                
+                    @if(Model.Reviews!=null && Model.Reviews.Count()!=0){                        
+                        @foreach(var reviewList in Model.Reviews){
+                            <div class="review">
+                                @if(reviewList.ReviewPersonProfilePhoto!=null){
+                                    <div class="person">
+                                        <img src="@reviewList.ReviewPersonProfilePhoto.Url()" alt="">                              
+                                        @if(!String.IsNullOrWhiteSpace(reviewList.PersonName) && !String.IsNullOrWhiteSpace(reviewList.PersonRole)){
+                                            <h5>@reviewList.PersonName</h5>
+                                            <small>@reviewList.PersonRole</small>
+                                        }
+                                    </div>
+                                }                               
+                                @if(!String.IsNullOrWhiteSpace(reviewList.ReviewComment)){
+                                    <h3>@reviewList.ReviewComment</h3>
+                                    <div class="stars">
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class='bx bxs-star'></i>
+                                        <i class="bx bxs-star-half"></i>
+                                    </div>
+                                    <i class='bx bxs-quote-alt-left'></i>
+                                }    
+                            </div>   
+                        }                                       
+                    }
+                </div>             
+        </section>
+    }
+    
+    @if(!String.IsNullOrWhiteSpace(Model.BlogTitle) && !String.IsNullOrWhiteSpace(Model.BlogSubtitle)){
+        <section id="blog" class="fade-in">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="intro">
+                            <h6>@Model.BlogTitle</h6>
+                            <h1>@Model.BlogSubtitle</h1>
+                            @if(!String.IsNullOrWhiteSpace(Model.BlogDescription)){
+                                <p class="mx-auto">@Model.BlogDescription</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @if(Model.BlogList != null && Model.BlogList.Count() != 0){
+                        @foreach(var blog in Model.BlogList){
+                            <div class="col-md-4">
+                                <article class="blog-post">
+                                    @if(blog.BlogBg != null){
+                                        <img src="@blog.BlogBg.Url()" alt="">
+                                    }
+                                    @if(blog.BlogCta != null){
+                                        <a href="@blog.BlogCta.Url" class="tag">@blog.BlogCta.Name</a>
+                                    }
+                                    <div class="content">
+                                        <small>@blog.BlogDate.ToString("dd MMM, yyyy")</small>
+                                        @if(!String.IsNullOrWhiteSpace(blog.BlogName)){
+                                            <h5>@blog.BlogName</h5>
+                                        }
+                                        @if(!String.IsNullOrWhiteSpace(blog.BlogComment)){
+                                            <p>@blog.BlogComment</p>
+                                        }
+                                    </div>
+                                </article>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    
+
+    
+@if(Model.FooterBg != null){
+    
+        <footer style="background: linear-gradient(rgba(8, 32, 50, 0.8), rgba(8, 32, 50, 0.8)), url('@Model.FooterBg.Url()');">
+        <div class="footer-top text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        @if(!String.IsNullOrWhiteSpace(Model.FooterTitle)){
+                            <h4 class="navbar-brand">@Model.FooterTitle<span class="dot">.</span></h4>
+                        }
+                        @if(!String.IsNullOrWhiteSpace(Model.FooterContent)){
+                            <p>@Model.FooterContent</p>
+                        }
+                        <div class="col-auto social-links">
+                            <a href="#"><i class='bx bxl-facebook'></i></a>
+                            <a href="#"><i class='bx bxl-twitter'></i></a>
+                            <a href="#"><i class='bx bxl-instagram'></i></a>
+                            <a href="#"><i class='bx bxl-pinterest'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            @if(!String.IsNullOrWhiteSpace(Model.CRcontent)){
+                <p class="mb-0">@Model.CRcontent</p>
+            }
+        </div>
+    </footer>
+        }
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row gy-4">
+                            <div class="col-lg-4 col-sm-12 bg-cover"
+                                 style="background-image: url(img/c2.jpg); min-height:300px;">
+                                <div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <form class="p-lg-5 col-12 row g-3">
+                                    <div>
+                                        <h1>Get in touch</h1>
+                                        <p>Fell free to contact us and we will get back to you as soon as possible</p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="userName" class="form-label">First name</label>
+                                        <input type="text" class="form-control" placeholder="Jon" id="userName"
+                                               aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="userName" class="form-label">Last name</label>
+                                        <input type="text" class="form-control" placeholder="Doe" id="userName"
+                                               aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="userName" class="form-label">Email address</label>
+                                        <input type="email" class="form-control" placeholder="Johndoe@example.com" id="userName"
+                                               aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="exampleInputEmail1" class="form-label">Enter Message</label>
+                                        <textarea name="" placeholder="This is looking great and nice." class="form-control" id="" rows="4"></textarea>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-brand">Send Message</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Bootstrap Bundle (Includes Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
